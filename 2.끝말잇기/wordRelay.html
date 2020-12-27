@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>끝말잇기</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>{{ word }}</div>
+      <form v-on:submit="onSubmitForm">
+        <input type="text" v-model="value" refs="answer" />
+        <button type="submit">입력</button>
+      </form>
+      <div class="result">{{ result }}</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          word: "제로초",
+          first: "",
+          last: "",
+          value: "",
+          result: "",
+        },
+        methods: {
+          onSubmitForm(evt) {
+            evt.preventDefault();
+            const start = this.value[0];
+            const end = this.word[this.word.length - 1];
+            if (start === end && this.value.length === 3) {
+              this.result = "쿵쿵따";
+              this.word = this.value;
+              this.$refs.answer = focus();
+              this.value = "";
+            } else {
+              this.result = "땡";
+              this.$refs.answer = focus();
+              this.value = "";
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
