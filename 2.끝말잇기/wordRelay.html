@@ -7,31 +7,41 @@
   </head>
   <body>
     <div id="app">
-      <div>{{ word }}</div>
-      <form v-on:submit="onSubmitForm">
-        <input type="text" v-model="value" refs="answer" />
-        <button type="submit">입력</button>
-      </form>
-      <div class="result">{{ result }}</div>
+      <word-relay start-word="제로초"></word-relay>
+      <word-relay start-word="초밥"></word-relay>
+      <word-relay start-word="밥집"></word-relay>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
-      const app = new Vue({
-        el: "#app",
-        data: {
-          word: "제로초",
-          first: "",
-          last: "",
-          value: "",
-          result: "",
+      Vue.component("wordRelay", {
+        // 글로벌 컴포넌트
+        template: `
+          <div>
+            <div>{{ word }}</div>
+            <form v-on:submit="onSubmitForm">
+              <input type="text" v-model="value" refs="answer" />
+              <button type="submit">입력</button>
+            </form>
+            <div class="result">{{ result }}</div>
+          </div>
+        `,
+        props: ["startWord"],
+        data() {
+          return {
+            word: this.startWord,
+            first: "",
+            last: "",
+            value: "",
+            result: "",
+          };
         },
         methods: {
           onSubmitForm(evt) {
             evt.preventDefault();
             const start = this.value[0];
             const end = this.word[this.word.length - 1];
-            if (start === end && this.value.length === 3) {
-              this.result = "쿵쿵따";
+            if (start === end) {
+              this.result = "딩동댕";
               this.word = this.value;
               this.$refs.answer = focus();
               this.value = "";
@@ -42,6 +52,11 @@
             }
           },
         },
+      });
+    </script>
+    <script>
+      const app = new Vue({
+        el: "#app",
       });
     </script>
   </body>
